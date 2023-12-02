@@ -60,10 +60,18 @@ function InitSnake()
 function RenderSnake()
 {
    // Движение головы
-   let Head = Snake[0]
+   // let Head = Object.copy(Snake[0])
 
-   Head.col += dCol.value
-   Head.Row += dRow.value
+   let Head = JSON.stringify(Snake[0])
+   Head = JSON.parse(Head)
+
+   Head.col = Head.col + dCol.value
+   Head.row = Head.row + dRow.value
+
+   if (Head.row < 0 || Head.row >= 25 || Head.Col < 0 || Head.Col >= 25)
+   {
+
+   }
 
    Snake[0].seg = 2
 
@@ -74,7 +82,7 @@ function RenderSnake()
    let Tail = Snake.pop()
 
    Snake.forEach((cell) => Board[cell.row][cell.col] = cell.seg)
-   Board[Tail.row][Tail.Col] = 0
+   Board[Tail.row][Tail.col] = 0
 }
 
 </script>
