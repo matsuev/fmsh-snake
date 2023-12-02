@@ -13,10 +13,13 @@
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted, reactive } from 'vue'
+import { onBeforeMount, onMounted, reactive, ref } from 'vue'
 
 const Board = reactive([])
 const Snake = reactive([])
+
+const dCol = ref(0)
+const dRow = ref(-1)
 
 onBeforeMount(() =>
 {
@@ -26,7 +29,7 @@ onBeforeMount(() =>
 
 onMounted(() =>
 {
-   RenderSnake()
+   setInterval(() => RenderSnake(), 1000)
 })
 
 function InitBoard()
@@ -49,14 +52,29 @@ function InitSnake()
       Snake.push({
          col: 12,
          row: 12 + i,
-         seg: i == 0 ? 1 : 2,
+         seg: i == 0 ? 1 : 2
       })
    }
 }
 
 function RenderSnake()
 {
-   Snake.forEach(segment => Board[segment.row][segment.col] = segment.seg)
+   // Движение головы
+   let Head = Snake[0]
+
+   Head.col += dCol.value
+   Head.Row += dRow.value
+
+   Snake[0].seg = 2
+
+   Snake.unshift(Head)
+
+   // Хвост
+
+   let Tail = Snake.pop()
+
+   Snake.forEach((cell) => Board[cell.row][cell.col] = cell.seg)
+   Board[Tail.row][Tail.Col] = 0
 }
 
 </script>
@@ -65,11 +83,8 @@ function RenderSnake()
 .board-cell {
    width: 20px;
    height: 20px;
-   text-align: center;
-   line-height: 20px;
    display: inline-block;
-   border-radius: 4px;
-   margin: 1px;
+   border: 1px dotted #ccc;
 }
 
 .snake-head {
