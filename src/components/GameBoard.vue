@@ -15,6 +15,8 @@
 <script setup>
 import { onBeforeMount, onMounted, reactive, ref } from 'vue'
 
+const emit = defineEmits(['score'])
+
 const Board = reactive([])
 const Snake = reactive([])
 
@@ -114,6 +116,11 @@ function RenderSnake()
 
    Snake[0].seg = 2
 
+   if (Snake.filter((item) => item.row == Head.row && item.col == Head.col).length != 0)
+   {
+      GameOver()
+   }
+
    // Snake.unshift(Head)
 
    // Хвост
@@ -123,6 +130,7 @@ function RenderSnake()
       let B = NewTarget()
       Board[B.row][B.col] = 3
       Snake.unshift(Head)
+      emit('score', Snake.length - 5)
       console.log("Take target")
    } else
    {

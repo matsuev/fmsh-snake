@@ -1,8 +1,16 @@
 <template>
-   <h1>Snake Game</h1>
-   <GameBoard />
+   <h1>Snake Game :: {{ score }}</h1>
+   <GameBoard @score="onScore" />
 </template>
 
 <script setup>
 import GameBoard from './components/GameBoard.vue'
+import { ref } from 'vue'
+
+const score = ref(0)
+
+function onScore(s)
+{
+   score.value++
+}
 </script>
