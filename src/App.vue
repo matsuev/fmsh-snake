@@ -9,7 +9,7 @@ import { ref } from 'vue'
 
 const score = ref(0)
 
-function onScore(s)
+function onScore()
 {
    score.value++
 }

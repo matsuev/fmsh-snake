@@ -130,7 +130,7 @@ function RenderSnake()
       let B = NewTarget()
       Board[B.row][B.col] = 3
       Snake.unshift(Head)
-      emit('score', Snake.length - 5)
+      emit('score')
       console.log("Take target")
    } else
    {
